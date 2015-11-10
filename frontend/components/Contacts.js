@@ -1,7 +1,7 @@
-var RouteHandler = ReactRouter.RouteHandler;
+import React, { Component } from 'react';
 
-this.Contacts = React.createClass({
-  render: function() {
+class Contacts extends Component {
+  render() {
     return (
       <div className="contacts">
         <h1>Comments</h1>
@@ -9,4 +9,6 @@ this.Contacts = React.createClass({
       </div>
     );
   }
-});
+}
+
+export default Contacts;

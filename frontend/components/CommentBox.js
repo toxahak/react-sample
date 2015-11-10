@@ -1,7 +1,19 @@
-this.CommentBox = React.createClass({
-  loadCommentsFromServer: function() {
+import React, { Component } from 'react';
+import CommentList from './CommentList'
+import CommentForm from './CommentForm'
+import $ from 'jquery'
+
+class CommentBox extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: []
+    };
+  }
+
+  loadCommentsFromServer() {
     $.ajax({
-      url: 'api/comments',
+      url: '/api/comments',
       dataType: 'json',
       cache: false,
       success: function(data) {
@@ -11,13 +23,14 @@ this.CommentBox = React.createClass({
         console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
-  },
-  handleCommentSubmit: function(comment) {
+  }
+
+  handleCommentSubmit(comment) {
     var comments = this.state.data;
     var newComments = comments.concat([comment]);
     this.setState({data: newComments});
     $.ajax({
-      url: 'api/comments',
+      url: '/api/comments',
       dataType: 'json',
       type: 'POST',
       data: comment,
@@ -28,20 +41,21 @@ this.CommentBox = React.createClass({
         console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
-  },
-  getInitialState: function() {
-    return {data: []};
-  },
-  componentDidMount: function() {
+  }
+
+  componentDidMount() {
     this.loadCommentsFromServer();
-  },
-  render: function() {
+  }
+
+  render() {
     return (
       <div className="commentBox">
         <h1>Comments</h1>
         <CommentList data={this.state.data} />
-        <CommentForm onCommentSubmit={this.handleCommentSubmit} />
+        <CommentForm onCommentSubmit={this.handleCommentSubmit.bind(this)} />
       </div>
     );
   }
-});
+}
+
+export default CommentBox;

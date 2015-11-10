@@ -1,10 +1,13 @@
-this.Comment = React.createClass({
-  rawMarkup: function() {
+import React, { Component } from 'react';
+import marked from 'marked';
+
+class Comment extends Component {
+  rawMarkup() {
     var rawMarkup = marked(this.props.children.toString(), {sanitize: true});
     return { __html: rawMarkup };
-  },
+  }
 
-  render: function() {
+  render() {
     return (
       <div className="comment">
         <h2 className="commentAuthor">
@@ -14,4 +17,7 @@ this.Comment = React.createClass({
       </div>
     );
   }
-});
+}
+
+export default Comment;
+
