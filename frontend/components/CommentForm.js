@@ -1,5 +1,8 @@
-this.CommentForm = React.createClass({
-  handleSubmit: function(e) {
+import React, { Component } from 'react';
+
+class CommentForm extends Component {
+
+  handleSubmit(e) {
     e.preventDefault();
     var author = this.refs.author.value.trim();
     var text = this.refs.text.value.trim();
@@ -10,14 +13,17 @@ this.CommentForm = React.createClass({
     this.refs.author.value = '';
     this.refs.text.value = '';
     return;
-  },
-  render: function() {
+  }
+
+  render() {
     return (
-      <form className="commentForm" onSubmit={this.handleSubmit}>
+      <form className="commentForm" onSubmit={this.handleSubmit.bind(this)}>
         <input type="text" placeholder="Your name" ref="author" />
         <input type="text" placeholder="Say something..." ref="text" />
         <input type="submit" value="Post" />
       </form>
     );
   }
-});
+}
+
+export default CommentForm;

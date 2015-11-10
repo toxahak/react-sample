@@ -46,9 +46,4 @@ group :development do
   gem 'annotate'
 end
 
-source 'https://rails-assets.org' do
-  gem 'rails-assets-react-router', '~> 0.13.5'
-end
-
-gem 'react-rails', '~> 1.4.2'
 gem 'marked-rails' # Markdown parser

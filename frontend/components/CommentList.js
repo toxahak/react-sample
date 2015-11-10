@@ -1,5 +1,8 @@
-this.CommentList = React.createClass({
-  render: function() {
+import React, { Component } from 'react';
+import Comment from './Comment';
+
+class CommentList extends Component {
+  render() {
     var commentNodes = this.props.data.map(function (comment, index) {
       return (
         <Comment author={comment.author} key={index} >
@@ -13,4 +16,6 @@ this.CommentList = React.createClass({
       </div>
     );
   }
-});
+}
+
+export default CommentList;
