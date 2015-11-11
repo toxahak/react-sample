@@ -1,7 +1,8 @@
 var path = require('path');
 var webpack = require('webpack');
+var production = process.env.NODE_ENV === 'production';
 
-module.exports = {
+var config = {
   devtool: 'cheap-module-eval-source-map',
   entry: [
     'webpack-dev-server/client?http://localhost:4000',
@@ -14,8 +15,7 @@ module.exports = {
     publicPath: '/static/'
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.optimize.UglifyJsPlugin({minimize: true})
+    new webpack.HotModuleReplacementPlugin()
   ],
   module: {
     loaders: [{
@@ -24,11 +24,24 @@ module.exports = {
       exclude: /node_modules/,
       include: __dirname
     },
-    // SASS
-    {
-      test: /\.scss$/,
-      loader: 'style!css!sass',
-      include: __dirname
-    }]
+      // SASS
+      {
+        test: /\.scss$/,
+        loader: 'style!css!sass',
+        include: __dirname
+      }]
   }
 };
+
+if (production) {
+  config.plugins.push(new webpack.optimize.DedupePlugin());
+  config.plugins.push(new webpack.optimize.UglifyJsPlugin({
+    compress: {
+      warnings: false
+    }
+  }));
+  delete config.devtool;
+  config.entry = './index';
+}
+
+module.exports = config;
